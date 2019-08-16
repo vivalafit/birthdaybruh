@@ -1,0 +1,23 @@
+{
+  "name": "birthdaybruh",
+  "version": "0.0.1",
+  "description": "your favourite tool for reminding friend`s birthday",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vivalafit/birthdaybruh.git"
+  },
+  "author": "m_navrotsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vivalafit/birthdaybruh/issues"
+  },
+  "homepage": "https://github.com/vivalafit/birthdaybruh#readme",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1"
+  }
+}
