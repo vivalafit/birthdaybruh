@@ -1,30 +1,37 @@
 const config = require('../../configs/config');
-const TelegramBot = require('node-telegram-bot-api');
+const Telegraf = require('telegraf')
 
-// replace the value below with the Telegram token you receive from @BotFather
-const token = config.keys.TELEGRAM_BOT_API_KEY;
 
-// Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, {polling: true});
+const bot = new Telegraf(config.keys.TELEGRAM_BOT_API_KEY);
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-  // 'msg' is the received Message from Telegram
-  // 'match' is the result of executing the regexp above on the text content
-  // of the message
+const PDFParser = require("pdf2json");
+let fs = require('fs');
 
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
+//pdf parser - test
+const testParse = () => {
+ 
+  let pdfParser = new PDFParser();
+  pdfParser.loadPDF("../../pdf-tests/MNG-1409030-051119-1958-200.pdf");
+  pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
+  pdfParser.on("pdfParser_dataReady", pdfData => {
+   console.log('DATA : : ', pdfData);
+  });
 
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
-});
+ 
+}
 
-// Listen for any kind of message. There are different kinds of
-// messages.
-bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
 
-  // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, 'Get your ass back here!');
-});
+bot.hears('parse', (ctx) => {
+  ctx.reply('parsing')
+  testParse();
+})
+//
+
+bot.start((ctx) => ctx.reply('Welcome'))
+bot.help((ctx) => ctx.reply('Send me a sticker'))
+bot.on('sticker', (ctx) => ctx.reply('👍'))
+bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+
+
+
+bot.launch()
