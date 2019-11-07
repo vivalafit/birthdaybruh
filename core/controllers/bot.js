@@ -1,22 +1,25 @@
 const config = require('../../configs/config');
 const Telegraf = require('telegraf')
-
+const fs = require('fs');
+//tests
+var pdf2table = require('pdf2table')
+var path = require('path');
 
 const bot = new Telegraf(config.keys.TELEGRAM_BOT_API_KEY);
 
-const PDFParser = require("pdf2json");
-let fs = require('fs');
 
 //pdf parser - test
 const testParse = () => {
- 
-  let pdfParser = new PDFParser();
-  pdfParser.loadPDF("../../pdf-tests/MNG-1409030-051119-1958-200.pdf");
-  pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
-  pdfParser.on("pdfParser_dataReady", pdfData => {
-   console.log('DATA : : ', pdfData);
-  });
+  console.log(path.join(__dirname, '../../pdf-tests/tests.pdf'));
+  
+  fs.readFile(path.join(__dirname, '../../pdf-tests/tests.pdf'), function (err, buffer) {
+    if (err) return console.log(err);
 
+    pdf2table.parse(buffer, function (err, rows, rowsdebug) {
+        if(err) return console.log(err);
+        console.log(rows);
+    });
+  });
  
 }
 
@@ -31,7 +34,5 @@ bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-
-
 
 bot.launch()

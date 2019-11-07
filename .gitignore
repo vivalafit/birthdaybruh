@@ -2,3 +2,4 @@ node_modules/
 package-lock.json
 .env
 pdf-tests/MNG-1409030-051119-1958-200.pdf
+pdf-tests/tests.pdf
