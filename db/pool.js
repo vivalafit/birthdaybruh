@@ -10,4 +10,4 @@ const client = new Client({
   ssl: false,
 });
 
-//module.exports = client.connect();
+module.exports = client.connect();
